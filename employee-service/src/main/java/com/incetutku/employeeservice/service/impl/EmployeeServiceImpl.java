@@ -7,6 +7,8 @@ import com.incetutku.employeeservice.repository.EmployeeRepository;
 import com.incetutku.employeeservice.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -22,5 +24,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee);
 
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+    @Override
+    public EmployeeDto getById(Long id) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        return optionalEmployee.map(EmployeeMapper::mapToEmployeeDto).orElse(null);
     }
 }
