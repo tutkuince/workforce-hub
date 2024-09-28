@@ -4,4 +4,6 @@ import com.incetutku.departmentservice.dto.DepartmentDto;
 
 public interface DepartmentService {
     DepartmentDto save(DepartmentDto departmentDto);
+
+    DepartmentDto getByCode(String code);
 }
