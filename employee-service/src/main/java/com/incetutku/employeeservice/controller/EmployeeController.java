@@ -1,5 +1,6 @@
 package com.incetutku.employeeservice.controller;
 
+import com.incetutku.employeeservice.dto.APIResponseDto;
 import com.incetutku.employeeservice.dto.EmployeeDto;
 import com.incetutku.employeeservice.service.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<APIResponseDto> getEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getById(id));
     }
 }
