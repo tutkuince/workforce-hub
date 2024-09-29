@@ -10,17 +10,18 @@ import com.incetutku.employeeservice.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTemplate restTemplate) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, WebClient webClient) {
         this.employeeRepository = employeeRepository;
-        this.restTemplate = restTemplate;
+        this.webClient = webClient;
     }
 
     @Override
@@ -36,13 +37,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public APIResponseDto getById(Long id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         if (optionalEmployee.isPresent()) {
-            ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity(
-                    "http://localhost:8080/api/v1/departments/" + optionalEmployee.get().getDepartmentCode(),
-                    DepartmentDto.class
-            );
+            DepartmentDto departmentDto = webClient.get()
+                    .uri("http://localhost:8080/api/v1/departments/" + optionalEmployee.get().getDepartmentCode())
+                    .retrieve()
+                    .bodyToMono(DepartmentDto.class)
+                    .block();
 
             EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(optionalEmployee.get());
-            DepartmentDto departmentDto = responseEntity.getBody();
 
             return APIResponseDto.builder()
                     .employeeDto(employeeDto)
