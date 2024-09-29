@@ -11,6 +11,7 @@ public class EmployeeMapper {
                 .name(employeeDto.getName())
                 .surname(employeeDto.getSurname())
                 .email(employeeDto.getEmail())
+                .departmentCode(employeeDto.getDepartmentCode())
                 .build();
     }
 
@@ -20,6 +21,7 @@ public class EmployeeMapper {
                 .name(employee.getName())
                 .surname(employee.getSurname())
                 .email(employee.getEmail())
+                .departmentCode(employee.getDepartmentCode())
                 .build();
     }
 }
