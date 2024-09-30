@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: EMPLOYEE-SERVICE
   jpa:
     show-sql: true
     hibernate:
@@ -11,3 +13,9 @@ spring:
     username: root
     password: s3cr3t
     url: jdbc:postgresql://localhost:5432/employeeDB
+
+eureka:
+  instance:
+    client:
+      serverUrl:
+        defaultZone: http://localhost:8761/eureka/
