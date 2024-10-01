@@ -7,15 +7,23 @@ spring:
   ## Routes for Employee and Department Service
   cloud:
     gateway:
-      routes:
-        - id: EMPLOYEE-SERVICE
-          uri: lb://EMPLOYEE-SERVICE
-          predicates:
-          - Path=/api/v1/employees/**
-        - id: DEPARTMENT-SERVICE
-          uri: lb://DEPARTMENT-SERVICE
-          predicates:
-            - Path=/api/v1/departments/**
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      #routes:
+      #  - id: EMPLOYEE-SERVICE
+      #    uri: lb://EMPLOYEE-SERVICE
+      #    predicates:
+      #    - Path=/api/v1/employees/**
+      #  - id: DEPARTMENT-SERVICE
+      #    uri: lb://DEPARTMENT-SERVICE
+      #    predicates:
+      #      - Path=/api/v1/departments/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
 
 
 eureka:
