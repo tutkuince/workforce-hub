@@ -4,6 +4,19 @@ server:
 spring:
   application:
     name: API-GATEWAY
+  ## Routes for Employee and Department Service
+  cloud:
+    gateway:
+      routes:
+        - id: EMPLOYEE-SERVICE
+          uri: lb://EMPLOYEE-SERVICE
+          predicates:
+          - Path=/api/v1/employees/**
+        - id: DEPARTMENT-SERVICE
+          uri: lb://DEPARTMENT-SERVICE
+          predicates:
+            - Path=/api/v1/departments/**
+
 
 eureka:
   instance:
@@ -11,3 +24,8 @@ eureka:
       serverUrl:
         defaultZone: http://localhost:8761/eureka/
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
