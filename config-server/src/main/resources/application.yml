@@ -10,7 +10,13 @@ spring:
         git:
           uri: https://github.com/tutkuince/workforce-hub-config-server
           clone-on-start: true
-          default-label: master
+          default-label: main
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 eureka:
   instance:

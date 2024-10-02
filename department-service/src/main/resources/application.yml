@@ -4,18 +4,5 @@ server:
 spring:
   application:
     name: DEPARTMENT-SERVICE
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    username: root
-    password: s3cr3t
-    url: jdbc:postgresql://localhost:5432/departmentDB
-
-eureka:
-  instance:
-    client:
-      serverUrl:
-        defaultZone: http://localhost:8761/eureka/
+  config:
+    import: optional:configserver:http://localhost:8888
