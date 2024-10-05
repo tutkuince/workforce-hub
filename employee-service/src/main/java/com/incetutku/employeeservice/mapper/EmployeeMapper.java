@@ -12,6 +12,7 @@ public class EmployeeMapper {
                 .surname(employeeDto.getSurname())
                 .email(employeeDto.getEmail())
                 .departmentCode(employeeDto.getDepartmentCode())
+                .organizationCode(employeeDto.getOrganizationCode())
                 .build();
     }
 
@@ -22,6 +23,7 @@ public class EmployeeMapper {
                 .surname(employee.getSurname())
                 .email(employee.getEmail())
                 .departmentCode(employee.getDepartmentCode())
+                .organizationCode(employee.getOrganizationCode())
                 .build();
     }
 }

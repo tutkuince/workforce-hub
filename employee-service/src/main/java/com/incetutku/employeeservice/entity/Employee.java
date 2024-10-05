@@ -18,4 +18,5 @@ public class Employee {
     private String surname;
     private String email;
     private String departmentCode;
+    private String organizationCode;
 }
