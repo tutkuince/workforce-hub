@@ -4,7 +4,7 @@ server:
 spring:
   application:
     name: API-GATEWAY
-  ## Routes for Employee and Department Service
+  ## Routes for Employee, Department and Organization Service
   cloud:
     gateway:
       # Automatically Create Routes
@@ -21,6 +21,10 @@ spring:
           uri: lb://DEPARTMENT-SERVICE
           predicates:
             - Path=/api/v1/departments/**
+        - id: ORGANIZATION-SERVICE
+          uri: lb://ORGANIZATION-SERVICE
+          predicates:
+            - Path=/api/v1/organizations/**
 
 #logging:
 #  level:
