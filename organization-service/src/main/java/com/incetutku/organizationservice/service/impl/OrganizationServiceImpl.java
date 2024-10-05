@@ -7,6 +7,8 @@ import com.incetutku.organizationservice.repository.OrganizationRepository;
 import com.incetutku.organizationservice.service.OrganizationService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
@@ -21,5 +23,11 @@ public class OrganizationServiceImpl implements OrganizationService {
         Organization organization = OrganizationMapper.mapToOrganization(organizationDto);
         Organization savedOrganization = organizationRepository.save(organization);
         return OrganizationMapper.mapToOrganizationDto(savedOrganization);
+    }
+
+    @Override
+    public OrganizationDto getByCode(String code) {
+        Optional<Organization> optionalOrganization = organizationRepository.findByCode(code);
+        return optionalOrganization.map(OrganizationMapper::mapToOrganizationDto).orElse(null);
     }
 }

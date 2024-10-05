@@ -4,10 +4,7 @@ import com.incetutku.organizationservice.dto.OrganizationDto;
 import com.incetutku.organizationservice.service.OrganizationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/organizations")
@@ -22,5 +19,10 @@ public class OrganizationController {
     @PostMapping
     public ResponseEntity<OrganizationDto> save(@RequestBody OrganizationDto organizationDto) {
         return new ResponseEntity<>(organizationService.save(organizationDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{code}")
+    public ResponseEntity<OrganizationDto> getByCode(@PathVariable String code) {
+        return ResponseEntity.ok(organizationService.getByCode(code));
     }
 }
