@@ -3,12 +3,13 @@ package com.incetutku.employeeservice.service.impl;
 import com.incetutku.employeeservice.dto.APIResponseDto;
 import com.incetutku.employeeservice.dto.DepartmentDto;
 import com.incetutku.employeeservice.dto.EmployeeDto;
+import com.incetutku.employeeservice.dto.OrganizationDto;
 import com.incetutku.employeeservice.entity.Employee;
 import com.incetutku.employeeservice.mapper.EmployeeMapper;
 import com.incetutku.employeeservice.repository.EmployeeRepository;
-import com.incetutku.employeeservice.service.APIClient;
+import com.incetutku.employeeservice.service.APIDepartmentServiceClient;
+import com.incetutku.employeeservice.service.APIOrganizationServiceClient;
 import com.incetutku.employeeservice.service.EmployeeService;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +20,18 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
-    private final APIClient apiClient;
+    private final APIDepartmentServiceClient apiDepartmentServiceClient;
+    private final APIOrganizationServiceClient apiOrganizationServiceClient;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, APIClient apiClient) {
+    public EmployeeServiceImpl(
+            EmployeeRepository employeeRepository,
+            APIDepartmentServiceClient apiDepartmentServiceClient,
+            APIOrganizationServiceClient apiOrganizationServiceClient) {
         this.employeeRepository = employeeRepository;
-        this.apiClient = apiClient;
+        this.apiDepartmentServiceClient = apiDepartmentServiceClient;
+        this.apiOrganizationServiceClient = apiOrganizationServiceClient;
     }
 
     @Override
@@ -47,11 +53,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (optionalEmployee.isPresent()) {
             EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(optionalEmployee.get());
 
-            DepartmentDto departmentDto = apiClient.getDepartmentByCode(employeeDto.getDepartmentCode());
+            DepartmentDto departmentDto = apiDepartmentServiceClient.getDepartmentByCode(employeeDto.getDepartmentCode());
+            OrganizationDto organizationDto = apiOrganizationServiceClient.getOrganizationByCode(employeeDto.getOrganizationCode());
 
             return APIResponseDto.builder()
                     .employeeDto(employeeDto)
                     .departmentDto(departmentDto)
+                    .organizationDto(organizationDto)
                     .build();
         }
         return null;
