@@ -22,7 +22,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/{code}")
-    public ResponseEntity<OrganizationDto> getByCode(@PathVariable String code) {
+    public ResponseEntity<OrganizationDto> getOrganizationByCode(@PathVariable String code) {
         return ResponseEntity.ok(organizationService.getByCode(code));
     }
 }
